@@ -1,0 +1,67 @@
+<!doctype html>
+
+<html>
+<head>
+  <title>Facebook-photos</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
+  <script src="main.js"></script>
+
+  <link rel="import" href="bower_components/core-icons/image-icons.html">
+  <link rel="import" href="bower_components/core-icons/core-icons.html">
+  <link rel="import" href="bower_components/core-toolbar/core-toolbar.html">
+  <link rel="import" href="bower_components/font-roboto/roboto.html">
+  <link rel="import" href="bower_components/paper-tabs/paper-tabs.html">
+  <link rel="import" href="bower_components/core-pages/core-pages.html">
+  <link rel="import" href="bower_components/core-menu/core-menu.html">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body unresolved>
+  <template is="auto-binding" id="app">
+    <core-toolbar class="medium-tall">
+
+      <div flex>Apis Verdi Farm</div>
+
+      <div class="bottom fit" horizontal layout>
+
+        <paper-tabs selected="{{page}}" flex valueattr="data-category">
+
+          <paper-tab data-category="home">
+            <core-icon icon="home"></core-icon>
+          </paper-tab>
+          <paper-tab data-category="photos">
+            <core-icon icon="image:photo"</core-icon>
+          </paper-tab>
+          <paper-tab data-category="contact">
+            <core-icon icon="mail"></core-icon>
+          </paper-tab>
+
+        </paper-tabs>
+
+      </div>
+
+    </core-toolbar>
+
+
+    <core-pages selected="{{page}}" valueattr="data-category">
+      <section data-category="home">
+        <h1>Home</h1>
+      </section>
+      <section data-category="photos">
+        <h1>Photos</h1>
+      </section>
+      <section data-category="contact">
+        <h1>Contact</h1>
+      </section>
+    </core-pages>
+  </template>
+
+
+</body>
+</html>
