@@ -9,7 +9,6 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
 
   <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
-  <script src="main.js"></script>
 
   <link rel="import" href="bower_components/core-icons/image-icons.html">
   <link rel="import" href="bower_components/core-icons/core-icons.html">
@@ -18,12 +17,15 @@
   <link rel="import" href="bower_components/paper-tabs/paper-tabs.html">
   <link rel="import" href="bower_components/core-pages/core-pages.html">
   <link rel="import" href="bower_components/core-menu/core-menu.html">
+  <link rel="import" href="bower_components/core-ajax/core-ajax.html">
+
 
   <link rel="stylesheet" href="styles.css">
 </head>
 
 <body unresolved>
   <template is="auto-binding" id="app">
+  <core-ajax auto response="{{profileData}}" on-core-response="{{profileHandler}}" url="http://graph.facebook.com/394352164037565/photos" handleAs="json"></core-ajax>
     <core-toolbar class="medium-tall">
 
       <div flex>Apis Verdi Farm</div>
@@ -55,6 +57,11 @@
       </section>
       <section data-category="photos">
         <h1>Photos</h1>
+
+          <template repeat="{{photo in profileData.data}}">
+            <img src="{{photo.images[3].source}}">
+          </template>
+
       </section>
       <section data-category="contact">
         <h1>Contact</h1>
