@@ -57,11 +57,13 @@
       </section>
       <section data-category="photos">
         <h1>Photos</h1>
-
+        <div layout horizontal center-justified wrap>
           <template repeat="{{photo in profileData.data}}">
-            <img src="{{photo.images[3].source}}">
+            <div class="photo-container">
+              <div class="photo-background" style="background:url({{photo.images[3].source}}); background-size: cover; height:100%;"></div>
+            </div>
           </template>
-
+        </div>
       </section>
       <section data-category="contact">
         <h1>Contact</h1>
