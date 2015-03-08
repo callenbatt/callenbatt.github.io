@@ -10,6 +10,8 @@
     "polymer": "Polymer/polymer#latest",
     "paper-elements": "Polymer/paper-elements#latest",
     "core-ajax": "Polymer/core-ajax#latest",
-    "core-pages": "Polymer/core-pages#latest"
+    "core-pages": "Polymer/core-pages#latest",
+    "core-animated-pages": "Polymer/core-animated-pages#latest",
+    "google-map": "Polymer/google-map#latest"
   }
 }

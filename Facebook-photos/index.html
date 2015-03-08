@@ -16,8 +16,13 @@
   <link rel="import" href="bower_components/font-roboto/roboto.html">
   <link rel="import" href="bower_components/paper-tabs/paper-tabs.html">
   <link rel="import" href="bower_components/core-pages/core-pages.html">
+  <link rel="import" href="bower_components/core-animated-pages/core-animated-pages.html">
+  <link rel="import" href="bower_components/core-animated-pages/transitions/cross-fade.html">
+  <link rel="import" href="bower_components/core-animated-pages/transitions/slide-up.html">
+  <link rel="import" href="bower_components/core-animated-pages/transitions/tile-cascade.html">
   <link rel="import" href="bower_components/core-menu/core-menu.html">
   <link rel="import" href="bower_components/core-ajax/core-ajax.html">
+  <link rel="import" href="bower_components/google-map/google-map.html">
 
 
   <link rel="stylesheet" href="styles.css">
@@ -25,10 +30,11 @@
 
 <body unresolved>
   <template is="auto-binding" id="app">
-  <core-ajax auto response="{{profileData}}" on-core-response="{{profileHandler}}" url="http://graph.facebook.com/394352164037565/photos" handleAs="json"></core-ajax>
+  <core-ajax auto response="{{profile}}" on-core-response="{{profileHandler}}" url="http://graph.facebook.com/apisverdifarm" handleAs="json"></core-ajax>
+  <core-ajax auto response="{{albums}}" on-core-response="{{albumHandler}}" url="http://graph.facebook.com/394352164037565/photos" handleAs="json"></core-ajax>
     <core-toolbar class="medium-tall">
 
-      <div flex>Apis Verdi Farm</div>
+      <div flex center-justified>Apis Verdi Farm</div>
 
       <div class="bottom fit" horizontal layout>
 
@@ -51,14 +57,19 @@
     </core-toolbar>
 
 
-    <core-pages selected="{{page}}" valueattr="data-category">
+    <core-animated-pages selected="{{page}}" valueattr="data-category" transitions="slide-up cross-fade tile-cascade fade">
+
       <section data-category="home">
-        <h1>Home</h1>
+        <div id="home" style="background: url({{profile.cover.source}}) no-repeat center center; height: 100%" slide-up fade>
+          <div class="home-intro">
+            <p>{{profile.about}}</p>
+          </div>
+        </div>
       </section>
+
       <section data-category="photos">
-        <h1>Photos</h1>
-        <div layout horizontal center-justified wrap>
-          <template repeat="{{photo in profileData.data}}">
+        <div layout horizontal center-justified wrap tile-cascade fade>
+          <template repeat="{{photo in albums.data}}">
             <div class="photo-container">
               <div class="photo-background" style="background:url({{photo.images[3].source}}); background-size: cover; height:100%;"></div>
             </div>
@@ -66,9 +77,18 @@
         </div>
       </section>
       <section data-category="contact">
-        <h1>Contact</h1>
+        <h1 slide-up fade>Contact</h1>
       </section>
-    </core-pages>
+    </core-animated-pages>
+    <google-map zoomable="false" fitToMarkers>
+      <h1>hello</h1>
+      <google-map-marker latitude="41.643055" longitude="-72.218302" title="Apis Verdi Farm">
+
+      </google-map-marker>
+      <google-map-marker latitude="41.3378634" longitude="-71.8985434" title="Stonington Village Farmers Market">
+
+      </google-map-marker>
+    </google-map>
   </template>
 
 

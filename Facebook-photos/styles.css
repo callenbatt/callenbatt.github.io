@@ -20,12 +20,12 @@ a, a:hover {
 }
 
 core-toolbar {
-  background-color: #455ede;
+  background-color: #eeeeee;
   box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.2);
-  color: #fff;
+  color: #666666;
   font-size: 20px;
   font-weight: 400;
-  margin-bottom: 1.5em;
+  text-align: center;
 }
 
 paper-button {
@@ -50,16 +50,16 @@ paper-fab {
 }
 
 paper-tabs {
-  background-color: #5677fc;
-  color: #fff;
+  background-color: #dddddd;
+  color: #999999;
 }
 
 paper-tabs[noink][nobar] paper-tab.core-selected {
   color: #ffff8d;
 }
 .photo-container {
-  width: 280px;
-  height: 280px;
+  width: 140px;
+  height: 140px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   padding: 16px;
   margin: 16px;
@@ -68,3 +68,25 @@ paper-tabs[noink][nobar] paper-tab.core-selected {
 .photo-background{
   background-size: cover;
 }
+google-map {
+  width: 100%;
+  height: 400px;
+}
+core-animated-pages {
+  height: 600px;
+  margin-bottom: 20px;
+  overflow: auto;
+}
+.home-intro {
+  background: rgba(255, 255, 255, .75);
+  width: 100%;
+  padding: 32px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+
+
+
+
+
