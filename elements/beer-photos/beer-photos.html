@@ -38,7 +38,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-family: 'Coming Soon', cursive;
         text-align: center;
         font-size: 36px;
-        height: 50vh;
+        padding: 100px 0;
         width: 100%;
         color: #666666;
       }
@@ -74,10 +74,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         last-response="{{ajaxResponse}}" 
         on-response="callback"></iron-ajax>  
 
-    <div class="main-title" fit layout vertical>
-      <div center-center>
-            Walking with Beer [beta]
-      </div>
+    <div class="main-title" fit layout vertical center-center>
+               Walking with Beer [beta]
     </div>
 
     <template is="dom-repeat" items="[[ajaxResponse.feed.entry]]">
