@@ -34,6 +34,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         float: left; 
         margin-top: -50px;
       }
+      .title {
+        font-family: 'Coming Soon', cursive;
+        text-align: center;
+        font-size: 36px;
+      }
       .date {
         float: right;
         background-color: #D13F36;
@@ -66,17 +71,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         last-response="{{ajaxResponse}}" 
         on-response="callback"></iron-ajax>  
 
-    <google-map class="full-map" 
-                style="width:100%;height:400px;"
-                fit-to-markers>
-      <template is="dom-repeat" items="[[ajaxResponse.feed.entry]]">
-        <google-map-marker  latitude="{{item.georss$where.gml$Point.gml$pos.coord.lat}}" 
-                              longitude="{{item.georss$where.gml$Point.gml$pos.coord.lon}}">
-          </google-map-marker>
-      </template>
-
-
-    </google-map>
+    <div class="title">Walking with Beer</div>
 
     <template is="dom-repeat" items="[[ajaxResponse.feed.entry]]">
       <paper-material elevation="1">
