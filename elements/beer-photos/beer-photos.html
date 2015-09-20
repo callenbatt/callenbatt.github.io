@@ -34,7 +34,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         float: left; 
         margin-top: -50px;
       }
-      .title {
+      .main-title {
         font-family: 'Coming Soon', cursive;
         text-align: center;
         font-size: 36px;
@@ -73,8 +73,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         handle-as="json" 
         last-response="{{ajaxResponse}}" 
         on-response="callback"></iron-ajax>  
-
-    <div class="title">Walking with Beer</div>
+        
+    <div class="main-title" fit layout vertical center-justified>
+      <div self-center>
+            Walking with Beer [beta]
+      </div>
+    </div>
 
     <template is="dom-repeat" items="[[ajaxResponse.feed.entry]]">
       <paper-material elevation="1">
