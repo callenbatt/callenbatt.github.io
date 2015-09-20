@@ -1,0 +1,180 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="beer-photos">
+  <template id="beer-template-1">
+    <style>
+      :host {
+        display: block;
+      }
+      iron-ajax {
+        display: none;
+      }
+      iron-image {
+        width: 100%;
+        height: auto;
+      }
+      iron-image img {
+        width: 100%;
+        height: auto;
+      }
+      google-map.thumb-map {
+        margin: 0 8px 8px;
+        width: 150px; 
+        height: 150px; 
+        float: left; 
+        margin-top: -50px;
+      }
+      .date {
+        float: right;
+        background-color: #D13F36;
+        color: #ffffff;
+        text-align: center;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-top: -30px;
+        position: relative;
+        font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-weight: 400;
+      }
+      .description {
+        padding: 0 8px 8px;
+        font-family: 'Coming Soon', cursive;
+        font-weight: 900;
+        color: #666666;
+      }
+      .month {
+        font-size: 12px;
+      }
+      .day {
+        font-size: 18px;
+      }
+    </style>
+    <iron-ajax 
+        auto url="https://picasaweb.google.com/data/feed/base/user/100784956618777345901/albumid/6181025835597585121?alt=json&kind=photo&hl=en_US&imgmax=512" 
+        handle-as="json" 
+        last-response="{{ajaxResponse}}" 
+        on-response="callback"></iron-ajax>  
+
+    <google-map class="full-map" 
+                style="width:100%;height:400px;"
+                fit-to-markers>
+      <template is="dom-repeat" items="[[ajaxResponse.feed.entry]]">
+        <google-map-marker  latitude="{{item.georss$where.gml$Point.gml$pos.coord.lat}}" 
+                              longitude="{{item.georss$where.gml$Point.gml$pos.coord.lon}}">
+          </google-map-marker>
+      </template>
+
+
+    </google-map>
+
+    <template is="dom-repeat" items="[[ajaxResponse.feed.entry]]">
+      <paper-material elevation="1">
+
+        <iron-image src="[[item.content.src]]" placeholder="data:image/gif;base64,R0lGODdhyADIAOMAAO7u/5aWlqGho9jY5OPj8cLCyqyssLe3vc3N1wAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAyADIAAAE/hDISau9OOvNu/9gKI5kaZ5oqq5s675wLM90bd94ru987//AoHBILBqPyKRyyWw6n9CodEqtWq/YrHbL7Xq/4LB4TC6bz+i0es1uu9/wuHxOr9vv+Lx+z+/7/4CBgoOEhYaHiImKi4yNjo+QkZKTlJWWl5iZmpucnZ6foKGio6SlpqeoqaqrrK2ur7CxsrO0tba3uLm6u7y9vr/AwcLDxMXGx8jJysvMzc7P0NHS06kB1tYqA9cUBQEFrgLWAgIqBOEBFNuu1gMs2ugT3d/rAe0r77bsFwMGAQLzEggc8AcQAIJwA+EBuKbQmgF+3iocDHBAXiZ9Fd6dAxhuo4R3/gwnGDgnkqE1BBM0XrN3CSOFgQYM+ouHEsFMAP1i2lQIAN8EhwS6kZPQ74BMnpZcTgiHkoA1AhKxAWDaU+pHqwvrVVVI1ScmpRIwYjxwTqo+r1vTafV6FmtSrRXEak0ooB+8tjzR4v251m0llwSgUnUaAOrJtFMDoESrty9XxYi/wk0sMEBMoRKo7iRK8SiFxu285vQMoIDR0qdNN+rmbxxJlRFLi7u22OG1mDjP4bYb2uFVf+r0CZ+cyOS1oRD/cUM4cN5EA3bDhszqWOHEhBLIZh+qHdnmaFABwIwm9BxLZxAtn6fGvr379/Djy59Pv779+/jz69/Pv7///wAGQyjggAQWaOCBCCao4IIMNujggxBGKOGEFFZo4YUYZqjhhhx26OGHIIYo4ogklmjiiSimqOKKLLbo4oswxijjjDRKEQEAOw==" preload fade></iron-image>
+        
+        <google-map class="thumb-map"
+                    disable-zoom 
+                    map-type="terrain"
+                    latitude="[[item.georss$where.gml$Point.gml$pos.coord.lat]]"
+                    longitude="[[item.georss$where.gml$Point.gml$pos.coord.lon]]"
+                    language="en" 
+                    disable-default-ui
+                    zoom="12">
+          <google-map-marker  latitude="{{item.georss$where.gml$Point.gml$pos.coord.lat}}" 
+                              longitude="{{item.georss$where.gml$Point.gml$pos.coord.lon}}">
+          </google-map-marker>
+        </google-map>       
+        <div class="description">
+          <div class="date">
+            <span class="month">{{item.summary.date.month}}</span><br>
+            <span class="day">{{item.summary.date.day}}</span>
+          </div>
+          <span class="title">{{item.title.$t}}</span>
+        </div>
+      </paper-material>
+    </template>
+
+  </template>
+  
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'beer-photos',
+
+      properties: {
+        foo: {
+          type: String,
+          value: 'beer-photos',
+          notify: true
+        }
+      },
+      callback: function(e,d) {
+        var myResponse = d.response;
+        console.log(myResponse);
+
+        var myResponseItems = myResponse.feed.entry;
+        console.log(myResponseItems);
+
+        //For each entry geotag, we want to split it into separate coordinates, create array of coordinates, and push to master array
+
+        var coordinateArray = [];
+
+        $.each(myResponseItems, function(i, e) {
+          var coord = e.georss$where.gml$Point.gml$pos.$t.split(' ');
+          e.georss$where.gml$Point.gml$pos.coord = {};
+          e.georss$where.gml$Point.gml$pos.coord.lat = coord[0];
+          e.georss$where.gml$Point.gml$pos.coord.lon = coord[1];
+          coordinateArray.push(coord);
+          e.georss$where.gml$Point.gml$pos.coord.lat = parseFloat(e.georss$where.gml$Point.gml$pos.coord.lat);
+          e.georss$where.gml$Point.gml$pos.coord.lon = parseFloat(e.georss$where.gml$Point.gml$pos.coord.lon);
+
+          console.log("coord: " + e.georss$where.gml$Point.gml$pos.coord);
+        });
+
+        console.log("coordinateArray: " + coordinateArray);
+
+
+        //Get a Date! (unfortunately, not that kind of date)
+
+        $.each(myResponseItems, function(i,e) {
+          var dataRe = e.summary.$t.match("\u003cfont color=\"#333333\"\u003e(.*)M\u003c/font\u003e");
+
+          var date = dataRe[1].split(/[,|\s]+/);
+
+          e.summary.date = {};
+          e.summary.date.month = date[0];
+          e.summary.date.day = date[1];
+
+        });
+        
+        //Now we loop through the google maps and apply the proper coordinates
+
+        // $(document).ready(function() {
+        //   $.each($(".thumb-map"), function(i, e) {
+        //     e.attr("longitude", coordinateArray[i][0]);
+        //     console.log("google-map" + i);
+
+
+
+            // this.attr({
+            //   latitude: coordinateArray[i][0],
+            //   longitude: coordinateArray[i][1]
+            // });
+      }
+    });
+  })();
+  </script>
+</dom-module>
