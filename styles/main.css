@@ -26,3 +26,6 @@ beer-photos > paper-material.beer-photos {
   border-radius: 50%;
 }
 
+#map > div > div:not(:nth-child(1)) {
+    display: none;
+}
