@@ -1,0 +1,154 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="my-map">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      google-map {
+        height: calc(100vh - 64px);
+        width: 100%;
+      }
+      google-map google-map-marker icon {
+        height: 20px;
+        width: 20px;
+      }      
+      .date {
+        float: right;
+        background-color: #D13F36;
+        color: #ffffff;
+        text-align: center;
+        width: 50px;
+        height: 50px;
+        padding-top: 7px;
+        box-sizing: border-box;
+        border-radius: 50%;
+        margin-top: -30px;
+        position: relative;
+        font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-weight: 400;
+      }
+      .description {
+        padding: 0 8px 8px;
+        font-family: 'Coming Soon', cursive;
+        font-weight: 900;
+        color: #666666;
+        max-width: 512px;
+        box-sizing: border-box;
+      }
+      .month {
+        font-size: 12px;
+      }
+      .day {
+        font-size: 18px;
+      }
+    </style>
+    <!-- Keen - "https://picasaweb.google.com/data/feed/base/user/100784956618777345901/albumid/6215183610207790225?alt=json&kind=photo&hl=en_US&maximg=512&thumbsize=104u" -->
+    <!-- Beer - "https://picasaweb.google.com/data/feed/base/user/100784956618777345901/albumid/6181025835597585121?alt=json&kind=photo&hl=en_US&imgmax=512&thumbsize=104u" -->
+    <iron-ajax 
+        auto url="https://picasaweb.google.com/data/feed/base/user/100784956618777345901/albumid/6181025835597585121?alt=json&kind=photo&hl=en_US&imgmax=512&thumbsize=104u"
+        handle-as="json" 
+        last-response="{{ajaxResponse}}" 
+        on-response="callback"></iron-ajax> 
+
+    <google-map                 
+                    map-type="terrain"
+                    fitToMarkers
+                    language="en" 
+                    latitude="41.644469"
+                    longitude="-72.192955">
+        <template is="dom-repeat" items="[[ajaxResponse.feed.entry]]">
+          <google-map-marker  latitude="{{item.georss$where.gml$Point.gml$pos.coord.lat}}" 
+                              longitude="{{item.georss$where.gml$Point.gml$pos.coord.lon}}"
+                              icon="[[item.media$group.media$thumbnail.image]]">
+                <img src="[[item.content.src]]">
+                <div class="description">
+                  <div class="date">
+                    <span class="month">{{item.summary.date.month}}</span><br>
+                    <span class="day">{{item.summary.date.day}}</span>
+                  </div>
+                  <span class="title">{{item.title.$t}}</span>
+                </div>
+          </google-map-marker>
+        </template>
+    </google-map>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'my-map',
+
+      behaviors: [Polymer.NeonAnimatableBehavior, Polymer.IronResizableBehavior],
+
+      properties: {
+        animationConfig: {
+          value: function() {
+            return {
+              'entry': [{
+                name: 'fade-in-animation',
+                node: this
+              },{
+                name: 'scale-up-animation',
+                node: this
+              }],
+              'exit': [{
+                name: 'fade-out-animation',
+                node: this
+              },{
+                name: 'scale-down-animation',
+                node: this
+              }]
+            }
+          }
+        }
+      },
+      callback: function(e,d) {
+        var myResponse = d.response;
+        var myResponseItems = myResponse.feed.entry;
+
+        //let's loop over each entry and clean it up a bit
+        $.each(myResponseItems, function(i, e) {
+
+          //split latitude and longitude at the space
+          var coord = e.georss$where.gml$Point.gml$pos.$t.split(' ');
+
+          //build a coordinates object with the lat and lon and push to feed
+          var coordinateArray = [];
+          e.georss$where.gml$Point.gml$pos.coord = {};
+          e.georss$where.gml$Point.gml$pos.coord.lat = coord[0];
+          e.georss$where.gml$Point.gml$pos.coord.lon = coord[1];
+          coordinateArray.push(coord);
+
+          //convert string to numbers
+          e.georss$where.gml$Point.gml$pos.coord.lat = parseFloat(e.georss$where.gml$Point.gml$pos.coord.lat);
+          e.georss$where.gml$Point.gml$pos.coord.lon = parseFloat(e.georss$where.gml$Point.gml$pos.coord.lon);
+
+          //binding doesn't like array index, so create a new name/value
+          e.media$group.media$thumbnail.image = e.media$group.media$thumbnail[0].url;
+          
+          //Get a date out of the feed item summary and parse it into a date object 
+          var dataRe = e.summary.$t.match('\u003cfont color=\"#333333\"\u003e(.*)M\u003c/font\u003e');
+          var date = dataRe[1].split(/[,|\s]+/);
+          e.summary.date = {};
+          e.summary.date.month = date[0];
+          e.summary.date.day = date[1];
+
+        });
+      }
+    });
+  })();
+  </script>
+</dom-module>

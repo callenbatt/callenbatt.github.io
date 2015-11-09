@@ -12,20 +12,83 @@ body {
   font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #333;
 }
-beer-photos {
+paper-toolbar#mainToolbar {
+  background: #C2185B;
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#E91E63), to(#C2185B));
+  background: -webkit-linear-gradient(top, #E91E63, #C2185B);
+  background: -moz-linear-gradient(top, #E91E63, #C2185B);
+  background: -ms-linear-gradient(top, #E91E63, #C2185B);
+  background: -o-linear-gradient(top, #E91E63, #C2185B);
+}
+paper-toolbar#mainToolbar a{
+  text-decoration: none;
+  color: #ffffff;
+  padding: 8px 16px;
+  position: relative;
+}
+paper-toolbar#mainToolbar a:hover{
+  background: #C2185B;
+}
+.app-name {
+  font-family: 'Coming Soon', cursive;
+}
+#drawer #mainContainer {
+  padding: 16px;
+  text-align: center;
+}
+#drawer #mainContainer iron-image.profile-image img {
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+}
+#drawer #mainContainer #about {
+    font-family: 'Coming Soon', cursive;
+}
+#drawer #mainContainer #about h1 {
+  color: #C2185B;
+}
+#drawer #mainContainer #about a {
+  font-family: 'Roboto', sans-serif;
+  color: #C2185B;
+  text-decoration: none;
+}
+#drawer #mainContainer #about li {
+  list-style: none;
+  text-align: left;
+  padding: 4px 0
+}
+#drawer #mainContainer #about li iron-icon {
+  margin-right: 4px;
+}
+#drawer #mainContainer #about #drawer-footer {
+  width: 110px;
+  margin:0 auto;
+}
+#drawer #mainContainer #about #drawer-footer span {
+  padding-top: 32px;
+  float: left;
+}
+#drawer #mainContainer #about #drawer-footer iron-image {
+  float: right;
+}
+#drawer #mainContainer #about #drawer-footer img {
+  height: 75px;
+  width: auto;
+}
+my-photos {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
-beer-photos > paper-material.beer-photos {
-  width: 100%;
-  max-width: 480px;
-  margin: 8px;
+#mainContainer .content {
+  height: auto;
+}
+#mainContainer iron-pages {
+  padding: 0;
 }
 .thumb-map #map.google-map {
   border-radius: 50%;
 }
-
 #map > div > div:not(:nth-child(1)) {
     display: none;
 }

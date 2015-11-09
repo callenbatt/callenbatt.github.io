@@ -16,11 +16,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="generator" content="Polymer Starter Kit" />
-  <title>Walking with Beer</title>
+  <title>Polymer Starter Kit</title>
   <!-- Place favicon.ico in the `app/` directory -->
 
   <!-- Chrome for Android theme color -->
-  <meta name="theme-color" content="#303F9F">
+  <meta name="theme-color" content="#2E3AA1">
 
   <!-- Web Application Manifest -->
   <link rel="manifest" href="manifest.json">
@@ -45,37 +45,98 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <!-- build:css styles/main.css -->
   <link rel="stylesheet" href="styles/main.css">
   <!-- endbuild-->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
   <!-- build:js bower_components/webcomponentsjs/webcomponents-lite.min.js -->
   <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
   <!-- endbuild -->
-  <link href='https://fonts.googleapis.com/css?family=Coming+Soon' rel='stylesheet' type='text/css'>
 
   <!-- will be replaced with elements/elements.vulcanized.html -->
   <link rel="import" href="elements/elements.html">
   <!-- endreplace-->
-  <style type="text/css">
 
-  </style>
+  <!-- For shared styles, shared-styles.html import in elements.html -->
+  <style is="custom-style" include="shared-styles"></style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <link href='https://fonts.googleapis.com/css?family=Coming+Soon' rel='stylesheet' type='text/css'>
+
+
 </head>
 
 <body unresolved class="fullbleed layout vertical">
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">
 
+    <paper-drawer-panel force-narrow id="paperDrawerPanel" >
+      <!-- Drawer Scroll Header Panel -->
+      <paper-scroll-header-panel drawer fixed>
+        <iron-image class="profile-image" src="https://lh3.googleusercontent.com/-ys827D36U1E/AAAAAAAAAAI/AAAAAAAAVw8/gvW4GNO2dL4/s120-c/photo.jpg"></iron-image>
+        <div id="about">
+          <h1>Cheers!</h1>
+          <p>I hope you enjoyed this little project. If you see me out in the woods, don't be scared; have a beer with me.</p>
+          <p>On or off the trails, you can find me at:</p>
+          <ul>
+            <li><a href="https://google.com/+chrisbatt">
+            <iron-icon icon="custom:google"></iron-icon>+chrisbatt</a></li>
+            <li><a href="https://twitter.com/callenbatt">
+            <iron-icon icon="custom:twitter"></iron-icon>@callenbatt</a></li>
+            <li><a href="https://github.com/callenbatt">
+            <iron-icon icon="custom:github"></iron-icon>callenbatt</a></li>
+          </ul>
+          <p style="text-align:right;">- Chris Batt</p>
+          <div id="drawer-footer">
+            <span>yes we</span><iron-image src="/images/can.jpg"></iron-image>
+          </div>
+        </div>
+      </paper-scroll-header-panel>
 
       <!-- Main Area -->
+      <paper-header-panel main >
 
+        <!-- Main Toolbar -->
+        <paper-toolbar id="mainToolbar">
+          <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
+          <span class="flex"></span>
+
+          <!-- Toolbar icons -->
+              <a data-route="home" href="/" on-click="onDataRouteClick">
+                <iron-icon icon="image:photo-camera"></iron-icon>
+                <span>Photos</span>
+                <paper-ripple></paper-ripple>
+              </a>
+            
+              <a data-route="users" href="/map" on-click="onDataRouteClick">
+                <iron-icon icon="maps:place"></iron-icon>
+                <span>Map</span>
+                <paper-ripple></paper-ripple>
+              </a>
+
+          <!-- Application name -->
+          <div class="middle middle-container center horizontal layout">
+            <div class="app-name">Walking with Beer</div>
+          </div>
+
+          <!-- Application sub title -->
+
+
+        </paper-toolbar>
 
         <!-- Main Content -->
         <div class="content">
+          <neon-animated-pages class="flex" 
+                attr-for-selected="data-route" 
+                selected="{{route}}">
 
-          <beer-photos></beer-photos>
+              <my-photos data-route="home"></my-photos>
+              <my-map data-route="users"></my-map>
 
+          </neon-animated-pages>
         </div>
+      </paper-header-panel>
+    </paper-drawer-panel>
 
     <!-- Uncomment next block to enable Service Worker support (1/2) -->
-    
+    <!--
     <paper-toast id="caching-complete"
                  duration="6000"
                  text="Caching complete! This app will work offline.">
@@ -85,11 +146,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                           clients-claim
                           skip-waiting
                           on-service-worker-installed="displayInstalledToast">
-      <platinum-sw-cache default-cache-strategy="networkFirst"
-                         precache-file="precache.json">
+      <platinum-sw-cache default-cache-strategy="fastest"
+                         cache-config-file="cache-config.json">
       </platinum-sw-cache>
     </platinum-sw-register>
-    
+    -->
 
   </template>
 
